@@ -397,3 +397,8 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /Docs/Documentação Projeto.docx
+*.lck
+*.bak_**
+/Solution/src/GestaoCliente.Infra.Data/DbGestaoCliente.tt
+/Solution/src/GestaoCliente.Infra.Data/DbGestaoClienteAudit.txt
+/Solution/src/GestaoCliente.Infra.Data/EF.Reverse.POCO.v3.ttinclude
