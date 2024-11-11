@@ -173,7 +173,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
                 Nome = generateRandomString(257),
             };
 
-            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteTamanhoEmail);
+            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteTamanhoNome);
         }
 
         [Theory]
@@ -194,7 +194,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         [Fact]
         public void Delete()
         {
-            var id = service.GetAll().Select(s => s.Id).FirstOrDefault();
+            var id = service.GetAll().Select(s => s.Id).LastOrDefault();
 
             var result = service.Delete(id);
 
@@ -204,7 +204,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             {
                 var entity = service.GetById(id);
 
-                Assert.True(entity != null, "O cliente não foi excluído");
+                Assert.True(entity == null, "O cliente não foi excluído");
             }
         }
 

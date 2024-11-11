@@ -22,5 +22,33 @@ namespace GestaoCliente.Infra.Data.Repositories
                 return null;
             }
         }
+
+        public bool Delete(Guid id)
+        {
+            try
+            {
+                var result = _dbContext.PrClienteDelete(id);
+
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool Update(Cliente cliente)
+        {
+            try
+            {
+                var result = _dbContext.PrClienteUpdate(cliente.Id, cliente.Nome, cliente.Email);
+
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

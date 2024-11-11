@@ -20,6 +20,12 @@ namespace GestaoCliente.Infra.Data.Repositories
 
         public virtual ValueTask<TEntity?> GetByIdAsync(object? id) => _dbSet.FindAsync(id);
 
+        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter) => Get().Where(filter);
+
+        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter, bool isNoTracking) => Get(isNoTracking).Where(filter);
+
+        public IQueryable<TEntity> Get(params Expression<Func<TEntity, object>>[] includeProperties) => Get(true, includeProperties);
+
         public virtual IQueryable<TEntity> Get(bool isNoTracking = true, params Expression<Func<TEntity, object>>[] includeProperties) =>
            includeProperties
                .Aggregate(

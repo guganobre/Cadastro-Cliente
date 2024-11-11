@@ -10,5 +10,9 @@ namespace GestaoCliente.Core.Domain.Interface.Repositories
     public interface IClienteRepository : IBaseListRepository<Cliente>
     {
         Guid? Add(Cliente cliente);
+
+        bool Delete(Guid id);
+
+        bool Update(Cliente cliente);
     }
 }

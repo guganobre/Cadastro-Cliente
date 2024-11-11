@@ -18,6 +18,6 @@ namespace GestaoCliente.Core.Domain.Interface.Services
 
         List<Cliente> GetAll();
 
-        Cliente GetById(Guid id);
+        Cliente? GetById(Guid? id);
     }
 }

@@ -64,6 +64,21 @@ namespace GestaoCliente.Infra.Data
         private static partial void OnCreateModelPartial(ModelBuilder modelBuilder, string schema);
 
         // Stored Procedures
+        public int PrClienteDelete(Guid? id = null)
+        {
+            var idParam = new SqlParameter { ParameterName = "@id", SqlDbType = SqlDbType.UniqueIdentifier, Direction = ParameterDirection.Input, Value = id.GetValueOrDefault() };
+            if (!id.HasValue)
+                idParam.Value = DBNull.Value;
+
+            var procResultParam = new SqlParameter { ParameterName = "@procResult", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Output };
+
+            Database.ExecuteSqlRaw("EXEC @procResult = [dbo].[pr_Cliente_Delete] @id", idParam, procResultParam);
+
+            return (int)procResultParam.Value;
+        }
+
+        // PrClienteDeleteAsync() cannot be created due to having out parameters, or is relying on the procedure result (int)
+
         public List<PrClienteInsertResponse> PrClienteInsert(string nome, string email)
         {
             int procResult;
@@ -107,5 +122,28 @@ namespace GestaoCliente.Infra.Data
 
             return procResultData;
         }
+
+        public int PrClienteUpdate(Guid? id, string nome, string email)
+        {
+            var idParam = new SqlParameter { ParameterName = "@id", SqlDbType = SqlDbType.UniqueIdentifier, Direction = ParameterDirection.Input, Value = id.GetValueOrDefault() };
+            if (!id.HasValue)
+                idParam.Value = DBNull.Value;
+
+            var nomeParam = new SqlParameter { ParameterName = "@nome", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input, Value = nome, Size = 255 };
+            if (nomeParam.Value == null)
+                nomeParam.Value = DBNull.Value;
+
+            var emailParam = new SqlParameter { ParameterName = "@email", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input, Value = email, Size = 255 };
+            if (emailParam.Value == null)
+                emailParam.Value = DBNull.Value;
+
+            var procResultParam = new SqlParameter { ParameterName = "@procResult", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Output };
+
+            Database.ExecuteSqlRaw("EXEC @procResult = [dbo].[pr_Cliente_Update] @id, @nome, @email", idParam, nomeParam, emailParam, procResultParam);
+
+            return (int)procResultParam.Value;
+        }
+
+        // PrClienteUpdateAsync() cannot be created due to having out parameters, or is relying on the procedure result (int)
     }
 }

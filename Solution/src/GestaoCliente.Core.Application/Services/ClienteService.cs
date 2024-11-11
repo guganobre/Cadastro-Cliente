@@ -28,15 +28,18 @@ namespace GestaoCliente.Core.Application.Services
 
         public bool Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var exists = repository.Get(w => w.Id == id).Any();
+            if (!exists)
+            {
+                throw new ServiceException(TypeServiceException.ClienteId);
+            }
+
+            return repository.Delete(id);
         }
 
         public List<Cliente> GetAll() => repository.Get().OrderBy(o => o.Nome).ToList();
 
-        public Cliente GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public Cliente? GetById(Guid? id) => repository.Get(w => w.Id == id).FirstOrDefault();
 
         public Guid? Insert(IClienteRequest model)
         {
@@ -55,7 +58,25 @@ namespace GestaoCliente.Core.Application.Services
 
         public bool Update(Guid id, IClienteRequest model)
         {
-            throw new NotImplementedException();
+            var exists = repository.Get(w => w.Id == id).Any();
+            if (!exists)
+            {
+                throw new ServiceException(TypeServiceException.ClienteId);
+            }
+
+            var validator = new ClientRequestValidator();
+            var result = validator.Validate(model);
+            if (result.IsValid)
+            {
+                var entity = mapper.Map<Cliente>(model);
+                entity.Id = id;
+
+                return repository.Update(entity);
+            }
+            else
+            {
+                throw new ServiceException(result.Errors.First().ErrorMessage);
+            }
         }
     }
 }
