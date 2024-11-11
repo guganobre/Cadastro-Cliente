@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{697FCFCA-9BF3-4CDB-A2C8-B9F997E60CEC}"
 	ProjectSection(SolutionItems) = preProject
 		..\Docs\Desafio - Desenvolvimento de Sistemas.docx = ..\Docs\Desafio - Desenvolvimento de Sistemas.docx
-		..\Docs\Documentação Projeto.docx = ..\Docs\Documentação Projeto.docx
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B84A693F-D159-4CAE-834C-DCBDE0C109D8}"

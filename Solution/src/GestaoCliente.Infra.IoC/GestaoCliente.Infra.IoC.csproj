@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GestaoCliente.Core.Application\GestaoCliente.Core.Application.csproj" />
+    <ProjectReference Include="..\GestaoCliente.Core.Domain\GestaoCliente.Core.Domain.csproj" />
+    <ProjectReference Include="..\GestaoCliente.Infra.Data\GestaoCliente.Infra.Data.csproj" />
+  </ItemGroup>
+
 </Project>

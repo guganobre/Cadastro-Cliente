@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace GestaoCliente.Core.Domain
+namespace GestaoCliente.Core.Domain.Entities
 {
     // Clientes
     /// <summary>
@@ -19,12 +14,14 @@ namespace GestaoCliente.Core.Domain
         /// <summary>
         /// Nome do cliente
         /// </summary>
-        public string? Nome { get; set; } // Nome (length: 255)
+        public string? Nome { get; set; } // Nome (Tamanho máximo: 255)
 
         /// <summary>
         /// E-mail do cliente, campo único para cada cliente
         /// </summary>
-        public string Email { get; set; } = string.Empty; // Email (length: 255)
+        public string Email { get; set; } = string.Empty; // Email (Tamanho máximo: 255)
+
+        // Reverse navigation
 
         /// <summary>
         /// Enderecos filhos, onde [Enderecos].[ClienteId] aponta para esta entidade (Fk_Clientes_Enderecos)
