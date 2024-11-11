@@ -1,8 +1,8 @@
-namespace GestaoCliente.Core.Domain
+namespace GestaoCliente.Core.Domain.Entities
 {
     // Enderecos
     /// <summary>
-    /// Tabela para armazenas os logradouros dos clientes
+    /// Tabela para armazenar os logradouros dos clientes
     /// </summary>
     public class Endereco
     {
@@ -12,27 +12,27 @@ namespace GestaoCliente.Core.Domain
         public Guid Id { get; set; } // Id (Primary key)
 
         /// <summary>
-        /// Campo com o detalhe/nome da rua do endereço
+        /// Campo com o detalhe/nome do logradouro
         /// </summary>
-        public string Nome { get; set; } = string.Empty; // Nome (length: 500)
+        public string Logradouro { get; set; } = string.Empty; // Logradouro (Tamanho máximo: 500)
 
         /// <summary>
         /// Numero do endereço
         /// </summary>
-        public string? Numero { get; set; } // Numero (length: 10)
+        public string? Numero { get; set; } // Numero (Tamanho máximo: 10)
 
         /// <summary>
         /// Campo descritivo para detalhar o endereço
         /// </summary>
-        public string? Complemento { get; set; } // Complemento (length: 255)
+        public string? Complemento { get; set; } // Complemento (Tamanho máximo: 255)
 
         /// <summary>
         /// Apelido identificador via sistema do enderço
         /// </summary>
-        public string Apelido { get; set; } = string.Empty; // Apelido (length: 50)
+        public string Apelido { get; set; } = string.Empty; // Apelido (Tamanho máximo: 50)
 
         /// <summary>
-        /// Chave da tabela logradouro
+        /// Chave da tabela tipo logradouro
         /// </summary>
         public int LogradouroId { get; set; } // LogradouroId
 
@@ -44,14 +44,14 @@ namespace GestaoCliente.Core.Domain
         // Foreign keys
 
         /// <summary>
-        /// Cliente pai apontado por [Enderecos].([ClienteId]) (Fk_Clientes_Enderecos)
+        /// Cliente pai apontador por [Enderecos].([ClienteId]) (Fk_Clientes_Enderecos)
         /// </summary>
         public Cliente Cliente { get; set; } // Fk_Clientes_Enderecos
 
         /// <summary>
-        /// Logradouro pai apontado por [Enderecos].([LogradouroId]) (Fk_Logradouros_Enderecos)
+        /// TiposLogradouro pai apontador por [Enderecos].([LogradouroId]) (Fk_TiposLogradouro_Enderecos)
         /// </summary>
-        public Logradouro Logradouro { get; set; } // Fk_Logradouros_Enderecos
+        public TiposLogradouro TiposLogradouro { get; set; } // Fk_TiposLogradouro_Enderecos
 
         public Endereco()
         {

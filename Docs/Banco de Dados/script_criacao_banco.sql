@@ -1,15 +1,3 @@
--- APAGAR BANCO
---/*
-ALTER TABLE Enderecos DROP CONSTRAINT Fk_Clientes_Enderecos;
-ALTER TABLE Enderecos DROP CONSTRAINT Fk_Logradouros_Enderecos;
-DROP TABLE Clientes;
-DROP TABLE Enderecos;
-DROP TABLE Logradouros;
---*/
-
-
-
-
 CREATE TABLE Clientes (
   Id    uniqueidentifier DEFAULT newid() NOT NULL, 
   Nome  varchar(255) NULL, 
@@ -39,7 +27,7 @@ EXEC sp_addextendedproperty
   @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'Email';
 CREATE TABLE Enderecos (
   Id           uniqueidentifier DEFAULT newid() NOT NULL, 
-  Nome         varchar(500) NOT NULL, 
+  Logradouro   varchar(500) NOT NULL, 
   Numero       varchar(10) NULL, 
   Complemento  varchar(255) NULL, 
   Apelido      varchar(50) NOT NULL, 
@@ -48,7 +36,7 @@ CREATE TABLE Enderecos (
   CONSTRAINT Pk_Enderecos 
     PRIMARY KEY (Id));
 EXEC sp_addextendedproperty 
-  @NAME = N'MS_Description', @VALUE = N'Tabela para armazenas os logradouros dos clientes', 
+  @NAME = N'MS_Description', @VALUE = N'Tabela para armazenar os logradouros dos clientes', 
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
   @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Enderecos';
 EXEC sp_addextendedproperty 
@@ -57,10 +45,10 @@ EXEC sp_addextendedproperty
   @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Enderecos', 
   @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'Id';
 EXEC sp_addextendedproperty 
-  @NAME = N'MS_Description', @VALUE = N'Campo com o detalhe/nome da rua do endereço', 
+  @NAME = N'MS_Description', @VALUE = N'Campo com o detalhe/nome do logradouro', 
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
   @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Enderecos', 
-  @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'Nome';
+  @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'Logradouro';
 EXEC sp_addextendedproperty 
   @NAME = N'MS_Description', @VALUE = N'Numero do endereço', 
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
@@ -77,7 +65,7 @@ EXEC sp_addextendedproperty
   @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Enderecos', 
   @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'Apelido';
 EXEC sp_addextendedproperty 
-  @NAME = N'MS_Description', @VALUE = N'Chave da tabela logradouro', 
+  @NAME = N'MS_Description', @VALUE = N'Chave da tabela tipo logradouro', 
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
   @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Enderecos', 
   @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'LogradouroId';
@@ -86,9 +74,9 @@ EXEC sp_addextendedproperty
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
   @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Enderecos', 
   @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'ClienteId';
-CREATE TABLE Logradouros (
+CREATE TABLE TiposLogradouro (
   Id    int IDENTITY NOT NULL, 
-  Nome  varchar(50) NOT NULL, 
+  Nome  varchar(50) NULL, 
   Ativo bit DEFAULT 1 NOT NULL, 
   CONSTRAINT Pk_Logradouros 
     PRIMARY KEY (Id), 
@@ -97,21 +85,21 @@ CREATE TABLE Logradouros (
 EXEC sp_addextendedproperty 
   @NAME = N'MS_Description', @VALUE = N'Tipos de logradouros para cadastro de endereço', 
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
-  @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Logradouros';
+  @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'TiposLogradouro';
 EXEC sp_addextendedproperty 
-  @NAME = N'MS_Description', @VALUE = N'Chave da tabela logradouro', 
+  @NAME = N'MS_Description', @VALUE = N'Chave da tabela tipo logradouro', 
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
-  @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Logradouros', 
+  @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'TiposLogradouro', 
   @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'Id';
 EXEC sp_addextendedproperty 
-  @NAME = N'MS_Description', @VALUE = N'Nome identificador do logradouro', 
+  @NAME = N'MS_Description', @VALUE = N'Nome identificador do tipo logradouro', 
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
-  @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Logradouros', 
+  @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'TiposLogradouro', 
   @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'Nome';
 EXEC sp_addextendedproperty 
-  @NAME = N'MS_Description', @VALUE = N'Status do logradouro', 
+  @NAME = N'MS_Description', @VALUE = N'Status do tipo logradouro', 
   @LEVEL0TYPE = N'Schema', @LEVEL0NAME = N'dbo', 
-  @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'Logradouros', 
+  @LEVEL1TYPE = N'Table', @LEVEL1NAME = N'TiposLogradouro', 
   @LEVEL2TYPE = N'Column', @LEVEL2NAME = N'Ativo';
 ALTER TABLE Enderecos ADD CONSTRAINT Fk_Clientes_Enderecos FOREIGN KEY (ClienteId) REFERENCES Clientes (Id);
-ALTER TABLE Enderecos ADD CONSTRAINT Fk_Logradouros_Enderecos FOREIGN KEY (LogradouroId) REFERENCES Logradouros (Id);
+ALTER TABLE Enderecos ADD CONSTRAINT Fk_TiposLogradouro_Enderecos FOREIGN KEY (LogradouroId) REFERENCES TiposLogradouro (Id);
