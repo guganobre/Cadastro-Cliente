@@ -11,21 +11,23 @@ using GestaoCliente.Infra.Data.Configurations;
 using GestaoCliente.Infra.Data.Repositories;
 using GestaoCliente.Infra.Data;
 using GestaoCliente.Core.Domain.Interface.Repositories;
+using GestaoCliente.Core.Domain.Interface;
 
 namespace GestaoCliente.Infra.IoC
 {
     public static class RepositoryConfiguration
     {
-        public static IServiceCollection AddRepository(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddRepository(this IServiceCollection services, IConfiguration configuration, bool dbInMemory = false)
         {
+            services.AddMediatR(scan => scan.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
             services.AddDbContext<DbGestaoCliente>(options => options.UseSqlServer(configuration.GetConnectionString("SQLConnection"), b => b.MigrationsAssembly(typeof(DbGestaoCliente).Assembly.FullName)));
 
-            services.AddScoped<DbGestaoCliente>();
             services.AddScoped(typeof(IBaseListRepository<>), typeof(BaseListRepository<>));
+
+            services.AddScoped<IClienteRepository, ClienteRepository>();
 
             return services;
         }
-
-
     }
 }

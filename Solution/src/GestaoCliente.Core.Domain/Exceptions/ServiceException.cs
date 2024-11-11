@@ -8,10 +8,13 @@ namespace GestaoCliente.Core.Domain.Exceptions
 {
     public class ServiceException : Exception
     {
+        public ServiceException(string? mensagem) : base(mensagem)
+        {
+        }
+
         public ServiceException(TypeServiceException type)
             : base(GetMensagemErro(type))
         {
-
         }
 
         public static string? GetMensagemErro(TypeServiceException type)

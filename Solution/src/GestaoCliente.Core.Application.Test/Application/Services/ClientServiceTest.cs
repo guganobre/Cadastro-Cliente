@@ -1,7 +1,10 @@
 ﻿using GestaoCliente.Core.Application.DTOs.Requests;
 using GestaoCliente.Core.Domain.Entities;
 using GestaoCliente.Core.Domain.Exceptions;
+using GestaoCliente.Core.Domain.Interface;
 using GestaoCliente.Core.Domain.Interface.Services;
+using GestaoCliente.Infra.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace GestaoCliente.Core.Application.Test.Application.Services
 {
-    public class ClientServiceTest
+    public class ClientServiceTest : BaseServiceTest
     {
         private readonly IClienteService service;
 
-        public ClientServiceTest(IClienteService service)
+        public ClientServiceTest(IClienteService service, DbGestaoCliente db) : base(db)
         {
             this.service = service;
         }
@@ -25,6 +28,8 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             var result = service.GetAll();
 
             Assert.NotNull(result);
+
+            Assert.True(result.Any(), "Não foi possível listar os clientes");
         }
 
         [Fact]
@@ -32,7 +37,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         {
             var request = new ClienteRequest
             {
-                Email = "lgnobre@gmail.com",
+                Email = $"{generateRandomString(20)}@gmail.com",
                 Nome = "teste"
             };
 
@@ -209,7 +214,6 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         {
             Assert.Throws<ServiceException>(() => service.Delete(id)).ValidarMensagem(TypeServiceException.ClienteId);
         }
-
 
         private string generateRandomString(int length)
         {

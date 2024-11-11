@@ -9,8 +9,9 @@ var configuration = builder.Configuration;
 var services = builder.Services;
 
 
-services.AddRepository(configuration);
 
+services.AddRepository(configuration);
+services.AddService();
 
 
 

@@ -1,4 +1,5 @@
-﻿using GestaoCliente.Core.Domain.Interface.Repositories;
+﻿using GestaoCliente.Core.Domain.Interface;
+using GestaoCliente.Core.Domain.Interface.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -6,13 +7,13 @@ namespace GestaoCliente.Infra.Data.Repositories
 {
     public class BaseListRepository<TEntity> : IBaseListRepository<TEntity> where TEntity : class
     {
-        protected readonly DbGestaoCliente _sqlContext;
+        protected readonly DbGestaoCliente _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public BaseListRepository(DbGestaoCliente mySqlContext)
+        public BaseListRepository(DbGestaoCliente dbContext)
         {
-            _sqlContext = mySqlContext;
-            _dbSet = _sqlContext.Set<TEntity>();
+            _dbContext = dbContext;
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
         public virtual TEntity? GetById(object? id) => _dbSet.Find(id);

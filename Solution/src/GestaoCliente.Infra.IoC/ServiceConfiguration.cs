@@ -1,4 +1,6 @@
-﻿using GestaoCliente.Core.Application.Services;
+﻿using AutoMapper;
+using GestaoCliente.Core.Application.Helpers;
+using GestaoCliente.Core.Application.Services;
 using GestaoCliente.Core.Domain.Entities;
 using GestaoCliente.Core.Domain.Interface.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,9 @@ namespace GestaoCliente.Infra.IoC
         public static IServiceCollection AddService(this IServiceCollection service)
         {
             service.AddScoped<ITiposLogradouroService, TiposLogradouroService>();
+            service.AddScoped<IClienteService, ClienteService>();
+
+            service.AddSingleton(new MapperConfiguration(config => config.ConfigurationMap()).CreateMapper());
 
             return service;
         }

@@ -1,12 +1,14 @@
 using GestaoCliente.Core.Domain.Interface.Services;
+using GestaoCliente.Infra.Data;
 
 namespace GestaoCliente.Core.Application.Test.Application.Services
 {
-    public class TiposLogradouroServiceTest
+    public class TiposLogradouroServiceTest : BaseServiceTest
     {
         private readonly ITiposLogradouroService service;
 
-        public TiposLogradouroServiceTest(ITiposLogradouroService service)
+        public TiposLogradouroServiceTest(ITiposLogradouroService service, DbGestaoCliente db)
+            : base(db)
         {
             this.service = service;
         }
@@ -17,6 +19,8 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             var result = service.GetAll();
 
             Assert.NotNull(result);
+
+            Assert.True(result.Any(), "Não foi possível listar os registros do tipo logradouro");
         }
     }
 }

@@ -1,3 +1,4 @@
+using GestaoCliente.Core.Domain.Interface.Services;
 using GestaoCliente.Presentation.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,7 +9,7 @@ namespace GestaoCliente.Presentation.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IClienteService clienteService)
         {
             _logger = logger;
         }

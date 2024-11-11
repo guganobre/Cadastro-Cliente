@@ -399,12 +399,9 @@ FodyWeavers.xsd
 /Docs/Documentação Projeto.docx
 *.lck
 *.bak_**
-/Solution/src/GestaoCliente.Infra.Data/DbGestaoCliente.tt
-/Solution/src/GestaoCliente.Infra.Data/DbGestaoClienteAudit.txt
 /Solution/src/GestaoCliente.Infra.Data/*.ttinclude*
 /Solution/src/GestaoCliente.Infra.Data/Database1.cs
-/Solution/src/GestaoCliente.Infra.Data/Database1.tt
+/Solution/src/GestaoCliente.Infra.Data/*.tt*
 /Solution/src/GestaoCliente.Infra.Data/Database1Audit.txt
 /Solution/src/GestaoCliente.Infra.Data/Entities
 /Solution/src/GestaoCliente.Infra.Data/Interface
-/Solution/src/GestaoCliente.Infra.Data/Database.tt.bak

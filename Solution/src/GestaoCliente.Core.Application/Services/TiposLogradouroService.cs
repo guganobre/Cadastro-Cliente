@@ -18,9 +18,6 @@ namespace GestaoCliente.Core.Application.Services
             this.repository = repository;
         }
 
-        public List<TiposLogradouro> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public List<TiposLogradouro> GetAll() => repository.Get().ToList();
     }
 }
