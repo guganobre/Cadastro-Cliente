@@ -22,6 +22,11 @@ namespace GestaoCliente.Presentation.Web.Controllers
 
         public IActionResult Index()
         {
+            if (TempData["Success"] != null)
+            {
+                ViewBag.Success = TempData["Success"];
+            }
+
             var clientes = _clienteService.GetAll();
 
             return View(clientes);
@@ -41,6 +46,37 @@ namespace GestaoCliente.Presentation.Web.Controllers
                 {
                     var guid = _clienteService.Insert(_mapper.Map<ClienteDTORequest>(model));
 
+                    TempData["Success"] = "Cliente criado com sucesso!";
+                    return RedirectToAction("Index");
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+
+                return View(model);
+            }
+        }
+
+        public IActionResult Editar(Guid id)
+        {
+            var cliente = _clienteService.GetById(id);
+
+            return View(_mapper.Map<ClienteViewModel>(cliente));
+        }
+
+        [HttpPost]
+        public IActionResult Editar(Guid id, ClienteViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var guid = _clienteService.Update(id, _mapper.Map<ClienteDTORequest>(model));
+
+                    TempData["Success"] = "Cliente editado com sucesso!";
                     return RedirectToAction("Index");
                 }
 

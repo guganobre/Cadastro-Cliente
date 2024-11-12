@@ -18,8 +18,9 @@ namespace GestaoCliente.Presentation.Web.Helpers
 
         public static void AutoMapperClienteViewModel(this IMapperConfigurationExpression config)
         {
-            config.CreateMap<ClienteViewModel, ClienteDTORequest>()
-                .ReverseMap();
+            config.CreateMap<ClienteViewModel, ClienteDTORequest>();
+
+            config.CreateMap<Cliente, ClienteViewModel>();
         }
 
         //public static void AutoMapperEnderecoDTO(this IMapperConfigurationExpression config)

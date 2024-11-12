@@ -6,6 +6,21 @@
 <div class="text-center">
     <h1 class="display-4">Lista de Clientes</h1>
 
+    <!-- Exibe a mensagem de sucesso, se houver -->
+    @if (ViewBag.Success != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" id="displayMensagem">@ViewBag.Success</div>
+            </div>
+        </div>
+        <script>
+            setTimeout(function() {
+                $('#displayMensagem').fadeOut();
+            }, 5000);
+        </script>
+    }
+
     <div class="form-group">
         <a asp-action="Cadastrar" class="btn btn-primary">Adicionar Cliente</a>
     </div>
@@ -15,6 +30,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Email</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +39,7 @@
                 <tr>
                     <td>@cliente.Nome</td>
                     <td>@cliente.Email</td>
+                    <td><a asp-action="Editar" asp-route-id="@cliente.Id">Editar</a></td>
                 </tr>
             }
         </tbody>

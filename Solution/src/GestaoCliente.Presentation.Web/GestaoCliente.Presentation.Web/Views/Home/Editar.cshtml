@@ -1,9 +1,9 @@
 ﻿@model ClienteViewModel
 @{
-    ViewData["Title"] = "Cadastrar Cliente";
+    ViewData["Title"] = "Editar Cliente";
 }
 
-<h1>Cadastrar Cliente</h1>
+<h1>Atualizar Cliente - @Model.Nome</h1>
 
 <hr />
 <!-- Exibe a mensagem de erro, se houver -->
@@ -15,17 +15,18 @@
         </div>
     </div>
     <script>
-        setTimeout(function () {
+        setTimeout(function() {
             $('#displayMensagem').fadeOut();
         }, 5000);
     </script>
-
 }
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Cadastrar">
-            @{ Html.RenderPartial("_CadastroCliente", model: Model); }
+        <form asp-action="Editar">
+            @{
+                Html.RenderPartial("_CadastroCliente", model: Model);
+            }
         </form>
     </div>
 </div>
