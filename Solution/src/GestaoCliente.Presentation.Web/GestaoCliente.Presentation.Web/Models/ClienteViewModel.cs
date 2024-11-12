@@ -2,7 +2,7 @@
 
 namespace GestaoCliente.Presentation.Web.Models
 {
-    public struct ClienteViewModel
+    public class ClienteViewModel
     {
         public ClienteViewModel()
         {

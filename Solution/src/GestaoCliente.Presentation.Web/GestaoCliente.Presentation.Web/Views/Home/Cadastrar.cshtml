@@ -19,7 +19,9 @@
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Cadastrar">
-            @{ Html.RenderPartial("_CadastroCliente", model: Model); }
+            @{
+                await Html.RenderPartialAsync("_CadastroCliente");
+            }
         </form>
     </div>
 </div>

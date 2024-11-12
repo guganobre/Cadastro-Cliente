@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using GestaoCliente.Core.Application.Helpers;
+using GestaoCliente.Infra.Data;
 using GestaoCliente.Presentation.Web.Helpers;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace GestaoCliente.Presentation.Web.Configurations
@@ -38,6 +40,12 @@ namespace GestaoCliente.Presentation.Web.Configurations
 
             app.UseAuthorization();
             app.UseSession();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<DbGestaoCliente>();
+                dbContext.Database.Migrate(); // Aplica migrações pendentes
+            }
 
             app.MapControllerRoute(
                 name: "default",
