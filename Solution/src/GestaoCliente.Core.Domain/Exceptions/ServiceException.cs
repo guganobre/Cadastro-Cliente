@@ -25,6 +25,7 @@ namespace GestaoCliente.Core.Domain.Exceptions
 
         private static Dictionary<TypeServiceException, string> _erros = new Dictionary<TypeServiceException, string> {
             { TypeServiceException.ClienteEmail, "O campo e-mail não foi preenchido corretamente." },
+            { TypeServiceException.ClienteEmailExistente, "E-mail já foi cadastrado na base." },
             { TypeServiceException.ClienteId, "O campo Id não foi informado corretamente." },
             { TypeServiceException.ClienteNome, "O campo nome não foi preenchido corretamente." },
 
@@ -42,6 +43,7 @@ namespace GestaoCliente.Core.Domain.Exceptions
     {
         ClienteId,
         ClienteEmail,
+        ClienteEmailExistente,
         ClienteNome,
 
         EnderecoApelido,

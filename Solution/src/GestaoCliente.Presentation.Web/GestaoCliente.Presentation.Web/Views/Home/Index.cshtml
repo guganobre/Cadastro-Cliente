@@ -6,10 +6,13 @@
 <div class="text-center">
     <h1 class="display-4">Lista de Clientes</h1>
 
+    <div class="form-group">
+        <a asp-action="Cadastrar" class="btn btn-primary">Adicionar Cliente</a>
+    </div>
+
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nome</th>
                 <th>Email</th>
             </tr>
@@ -18,7 +21,6 @@
             @foreach (var cliente in Model)
             {
                 <tr>
-                    <td>@cliente.Id</td>
                     <td>@cliente.Nome</td>
                     <td>@cliente.Email</td>
                 </tr>

@@ -22,7 +22,7 @@ namespace GestaoCliente.Infra.IoC
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IEnderecoService, EnderecoService>();
 
-            services.AddSingleton(new MapperConfiguration(config => config.ConfigurationMap()).CreateMapper());
+            services.AddSingleton(new MapperConfiguration(config => config.ConfigurationServiceMap()).CreateMapper());
 
             return services;
         }

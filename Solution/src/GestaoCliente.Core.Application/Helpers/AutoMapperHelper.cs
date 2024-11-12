@@ -7,7 +7,7 @@ namespace GestaoCliente.Core.Application.Helpers
 {
     public static class AutoMapperHelper
     {
-        public static void ConfigurationMap(this IMapperConfigurationExpression config)
+        public static void ConfigurationServiceMap(this IMapperConfigurationExpression config)
         {
             config.AutoMapperClienteDTO();
             config.AutoMapperEnderecoDTO();

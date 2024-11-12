@@ -12,7 +12,7 @@
         /// <summary>
         /// Nome do cliente (Tamanho máximo: 255)
         /// </summary>
-        public string? Nome { get; set; }
+        public string Nome { get; set; }
 
         /// <summary>
         /// E-mail do cliente, campo único para cada cliente (Tamanho máximo: 255)

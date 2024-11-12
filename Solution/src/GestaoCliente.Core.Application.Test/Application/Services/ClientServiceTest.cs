@@ -47,6 +47,19 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void Insert_EmailExistente()
+        {
+            var email = service.GetAll().Select(s => s.Email).LastOrDefault();
+            var request = new ClienteDTORequest
+            {
+                Email = email,
+                Nome = "teste"
+            };
+
+            Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteEmailExistente);
+        }
+
         [Theory]
         [InlineData("lgnobre")]
         [InlineData("")]
@@ -99,6 +112,21 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
                 Assert.True(request.Email == modelUpdate.Email, "Não foi possível atualizar o e-mail do Cliente.");
                 Assert.True(request.Nome == modelUpdate.Nome, "Não foi possível atualizar o nome do Cliente.");
             }
+        }
+
+        [Fact]
+        public void Update_EmailExistente()
+        {
+            var model = service.GetAll().First();
+            var email = service.GetAll().Where(o => o.Id != model.Id).Select(s => s.Email).First();
+
+            var request = new ClienteDTORequest
+            {
+                Email = email,
+                Nome = model.Nome
+            };
+
+            Assert.Throws<ServiceException>(() => service.Update(model.Id, request)).ValidarMensagem(TypeServiceException.ClienteEmailExistente);
         }
 
         [Theory]

@@ -41,6 +41,12 @@ namespace GestaoCliente.Core.Application.Services
             var result = validator.Validate(model);
             if (result.IsValid)
             {
+                model.Email = model.Email.Trim().ToLower();
+                if (repository.Exists(e => e.Email.Equals(model.Email)))
+                {
+                    throw new ServiceException(TypeServiceException.ClienteEmailExistente);
+                }
+
                 return repository.Add(mapper.Map<Cliente>(model));
             }
             else
@@ -61,6 +67,12 @@ namespace GestaoCliente.Core.Application.Services
             var result = validator.Validate(model);
             if (result.IsValid)
             {
+                model.Email = model.Email.Trim().ToLower();
+                if (repository.Exists(e => e.Email.Equals(model.Email) && e.Id != id))
+                {
+                    throw new ServiceException(TypeServiceException.ClienteEmailExistente);
+                }
+
                 var entity = mapper.Map<Cliente>(model);
                 entity.Id = id;
 

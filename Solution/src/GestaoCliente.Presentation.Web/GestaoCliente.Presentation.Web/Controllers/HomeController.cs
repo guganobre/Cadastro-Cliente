@@ -1,3 +1,5 @@
+using AutoMapper;
+using GestaoCliente.Core.Domain.DTOs.Requests;
 using GestaoCliente.Core.Domain.Interface.Services;
 using GestaoCliente.Presentation.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +11,13 @@ namespace GestaoCliente.Presentation.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IClienteService _clienteService;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger, IClienteService clienteService)
+        public HomeController(ILogger<HomeController> logger, IClienteService clienteService, IMapper mapper)
         {
             _logger = logger;
-            this._clienteService = clienteService;
+            _clienteService = clienteService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -23,15 +27,31 @@ namespace GestaoCliente.Presentation.Web.Controllers
             return View(clientes);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Cadastrar()
         {
-            return View();
+            return View(new ClienteViewModel());
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public IActionResult Cadastrar(ClienteViewModel model)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var guid = _clienteService.Insert(_mapper.Map<ClienteDTORequest>(model));
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+
+                return View(model);
+            }
         }
     }
 }
