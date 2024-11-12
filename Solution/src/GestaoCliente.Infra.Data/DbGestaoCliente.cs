@@ -3,8 +3,13 @@ using GestaoCliente.Core.Domain.Entities;
 using GestaoCliente.Infra.Data.Configurations;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlTypes;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GestaoCliente.Infra.Data
 {

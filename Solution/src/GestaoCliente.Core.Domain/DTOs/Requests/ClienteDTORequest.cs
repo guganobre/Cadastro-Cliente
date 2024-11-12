@@ -3,7 +3,7 @@
     /// <summary>
     /// DTO para persitencia de um cliente
     /// </summary>
-    public struct ClienteDTORequest
+    public record ClienteDTORequest
     {
         public ClienteDTORequest()
         {

@@ -3,7 +3,7 @@
     /// <summary>
     /// DTO para criação do endereço
     /// </summary>
-    public struct EnderecoDTORequest
+    public record EnderecoDTORequest
     {
         public EnderecoDTORequest()
         {
