@@ -1,0 +1,73 @@
+﻿@model IEnumerable<GestaoCliente.Core.Domain.Entities.Endereco>
+@{
+    // ViewData["Title"] = "Endereços";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <!-- Exibe a mensagem de sucesso, se houver -->
+    @if (ViewBag.Success != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" id="displayMensagem">@ViewBag.Success</div>
+            </div>
+        </div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger" id="displayMensagem">@ViewBag.Error</div>
+            </div>
+        </div>
+    }
+
+    <div class="form-group d-flex justify-content-end">
+        <a asp-action="" asp-controller="Home" class="btn btn-secondary mr-2">
+            <i class="fas fa-arrow-left"></i> <!-- Ícone de seta para "Voltar" -->
+            Listar Clientes
+        </a>
+
+        <a asp-action="Cadastrar" class="btn btn-primary">
+            <i class="fas fa-plus"></i> <!-- Ícone de "Adicionar" -->
+            Adicionar Endereco
+        </a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Apelido</th>
+                <th>Tipo</th>
+                <th>Logradouro</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var endereco in Model)
+            {
+                <tr>
+                    <td>@endereco.Apelido</td>
+                    <td>@endereco.TiposLogradouro.Nome</td>
+                    <td>@((string.IsNullOrEmpty(endereco.Logradouro) && endereco.Logradouro.Length >= 55) ? endereco.Logradouro?.Substring(0, 55) : endereco.Logradouro)</td>
+
+
+                    <td class="action-column">
+                        <a asp-action="Editar" asp-route-id="@endereco.Id" class="btn btn-info btn-sm p-1" title="Editar">
+                            <i class="fas fa-edit"></i> <!-- Ícone de lápis para edição -->
+                        </a>
+                    </td>
+                    <td class="action-column">
+                        <a href="#" class="btn btn-danger btn-sm p-1" onclick="confirmarExclusao('Deseja realmente excluir este endereço?', '@Url.Action("Excluir", "Endereco", new { id = endereco.Id })')" title="Excluir">
+                            <i class="fas fa-trash-alt"></i> <!-- Ícone de lixeira -->
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

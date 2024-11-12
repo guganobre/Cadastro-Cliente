@@ -1,0 +1,27 @@
+﻿@model ClienteViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="Nome" class="control-label"></label>
+    <input asp-for="Nome" class="form-control" />
+    <span asp-validation-for="Nome" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Email" class="control-label"></label>
+    <input asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+</div>
+<hr />
+<div class="form-group d-flex justify-content-end">
+    
+    <a asp-action="Index" class="btn btn-secondary mr-2">
+        <i class="fas fa-arrow-left"></i> <!-- Ícone de seta para "Voltar" -->
+        Voltar
+    </a>
+   
+    <button type="submit" class="btn btn-success">
+        <i class="fas fa-save"></i> <!-- Ícone de disquete para "Salvar" -->
+        Salvar
+    </button>
+    
+</div>

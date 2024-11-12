@@ -1,0 +1,32 @@
+﻿@model ClienteViewModel
+@{
+    ViewData["Title"] = "Cadastrar Cliente";
+}
+
+<h1>Cadastrar Cliente</h1>
+
+<hr />
+<!-- Exibe a mensagem de erro, se houver -->
+@if (ViewBag.Error != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" id="displayMensagem">@ViewBag.Error</div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Cadastrar">
+            @{ Html.RenderPartial("_CadastroCliente", model: Model); }
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
