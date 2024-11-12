@@ -3,6 +3,7 @@ using GestaoCliente.Core.Domain.DTOs.Requests;
 using GestaoCliente.Core.Domain.Interface.Services;
 using GestaoCliente.Presentation.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace GestaoCliente.Presentation.Web.Controllers
@@ -25,6 +26,11 @@ namespace GestaoCliente.Presentation.Web.Controllers
             if (TempData["Success"] != null)
             {
                 ViewBag.Success = TempData["Success"];
+            }
+
+            if (TempData["Error"] != null)
+            {
+                ViewBag.Error = TempData["Error"];
             }
 
             var clientes = _clienteService.GetAll();
@@ -87,6 +93,32 @@ namespace GestaoCliente.Presentation.Web.Controllers
                 ViewBag.Error = ex.Message;
 
                 return View(model);
+            }
+        }
+
+        public IActionResult Excluir(Guid id)
+        {
+            try
+            {
+                // Código para excluir o cliente
+                var result = _clienteService.Delete(id);
+                if (result)
+                {
+                    TempData["Success"] = "Cliente excluido com sucesso!";
+                }
+                else
+                {
+                    TempData["Error"] = "Não foi possível excluir o cliente";
+                }
+
+                // Redireciona de volta para a lista de clientes ou qualquer outra página desejada
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Index");
             }
         }
     }

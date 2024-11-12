@@ -26,12 +26,14 @@ namespace GestaoCliente.Infra.Data.Repositories
 
         public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter, bool isNoTracking) => Get(isNoTracking).Where(filter);
 
-        public IQueryable<TEntity> Get(params Expression<Func<TEntity, object>>[] includeProperties) => Get(true, includeProperties);
+        public IQueryable<TEntity> Get(bool isNoTracking = true) => (isNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsNoTracking());
 
-        public virtual IQueryable<TEntity> Get(bool isNoTracking = true, params Expression<Func<TEntity, object>>[] includeProperties) =>
-           includeProperties
-               .Aggregate(
-                   (isNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsTracking()),
-                   (current, include) => current.Include(include));
+        //public IQueryable<TEntity> Get(params Expression<Func<TEntity, object>>[] includeProperties) => Get(false, includeProperties);
+
+        //public virtual IQueryable<TEntity> Get(bool isNoTracking = true, params Expression<Func<TEntity, object>>[] includeProperties) =>
+        //   includeProperties
+        //       .Aggregate(
+        //           ,
+        //           (current, include) => current.Include(include));
     }
 }

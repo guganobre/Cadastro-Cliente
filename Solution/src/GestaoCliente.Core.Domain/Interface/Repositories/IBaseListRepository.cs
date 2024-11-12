@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace GestaoCliente.Core.Domain.Interface.Repositories
 {
@@ -10,12 +11,14 @@ namespace GestaoCliente.Core.Domain.Interface.Repositories
 
         ValueTask<TEntity?> GetByIdAsync(object? id);
 
-        IQueryable<TEntity> Get(bool isNoTracking = true, params Expression<Func<TEntity, object>>[] includeProperties);
+        //IQueryable<TEntity> Get(bool isNoTracking = true, params Expression<Func<TEntity, object>>[] includeProperties);
 
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
 
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter, bool isNoTracking);
 
-        IQueryable<TEntity> Get(params Expression<Func<TEntity, object>>[] includeProperties);
+        IQueryable<TEntity> Get(bool isNoTracking = true);
+
+        //IQueryable<TEntity> Get(params Expression<Func<TEntity, object>>[] includeProperties);
     }
 }

@@ -5,6 +5,7 @@ using GestaoCliente.Core.Domain.Entities;
 using GestaoCliente.Core.Domain.Exceptions;
 using GestaoCliente.Core.Domain.Interface.Repositories;
 using GestaoCliente.Core.Domain.Interface.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestaoCliente.Core.Application.Services
 {
@@ -36,10 +37,12 @@ namespace GestaoCliente.Core.Application.Services
 
         public List<Endereco> GetAll() => repository.Get().ToList();
 
-        public List<Endereco> GetByClientId(Guid ClientId)
-        {
-            throw new NotImplementedException();
-        }
+        public List<Endereco> GetByClientId(Guid ClientId) =>
+            repository
+                .Get(w => w.ClienteId == ClientId)
+                .Include(o => o.TiposLogradouro)
+                .OrderBy(o => o.Apelido)
+                .ToList();
 
         public Endereco? GetById(Guid? id) => repository.Get(w => w.Id == id).FirstOrDefault();
 

@@ -18,6 +18,6 @@ namespace GestaoCliente.Core.Application.Services
             this.repository = repository;
         }
 
-        public List<TiposLogradouro> GetAll() => repository.Get().ToList();
+        public List<TiposLogradouro> GetIsActive() => repository.Get(w => w.Ativo).OrderBy(o => o.Nome).ToList();
     }
 }

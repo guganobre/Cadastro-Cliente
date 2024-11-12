@@ -37,6 +37,7 @@ namespace GestaoCliente.Presentation.Web.Configurations
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

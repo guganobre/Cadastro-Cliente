@@ -11,7 +11,7 @@ namespace GestaoCliente.Presentation.Web.Helpers
         public static IMapperConfigurationExpression ConfigurationApplicationMap(this IMapperConfigurationExpression config)
         {
             config.AutoMapperClienteViewModel();
-            //config.AutoMapperEnderecoDTO();
+            config.AutoMapperEnderecoDTO();
 
             return config;
         }
@@ -23,9 +23,10 @@ namespace GestaoCliente.Presentation.Web.Helpers
             config.CreateMap<Cliente, ClienteViewModel>();
         }
 
-        //public static void AutoMapperEnderecoDTO(this IMapperConfigurationExpression config)
-        //{
-        //    config.CreateMap<EnderecoDTORequest, Endereco>();
-        //}
+        public static void AutoMapperEnderecoDTO(this IMapperConfigurationExpression config)
+        {
+            config.CreateMap<EnderecoViewModel, EnderecoDTORequest>();
+            config.CreateMap<Endereco, EnderecoViewModel>();
+        }
     }
 }

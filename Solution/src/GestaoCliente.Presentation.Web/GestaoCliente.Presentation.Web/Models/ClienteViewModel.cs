@@ -2,8 +2,12 @@
 
 namespace GestaoCliente.Presentation.Web.Models
 {
-    public class ClienteViewModel
+    public struct ClienteViewModel
     {
+        public ClienteViewModel()
+        {
+        }
+
         [Required(ErrorMessage = "O nome é obrigatório.")]
         [StringLength(255, ErrorMessage = "O nome deve ter no máximo 255 caracteres.")]
         public string Nome { get; set; } = string.Empty;

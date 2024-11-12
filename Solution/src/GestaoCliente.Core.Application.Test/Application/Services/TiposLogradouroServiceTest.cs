@@ -16,7 +16,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         [Fact]
         public void Listar()
         {
-            var result = service.GetAll();
+            var result = service.GetIsActive();
 
             Assert.NotNull(result);
 

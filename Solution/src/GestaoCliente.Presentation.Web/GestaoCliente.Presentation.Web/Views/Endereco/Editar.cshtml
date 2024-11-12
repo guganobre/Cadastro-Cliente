@@ -1,9 +1,10 @@
-﻿@model ClienteViewModel
+﻿@model GestaoCliente.Presentation.Web.Models.EnderecoViewModel
+
 @{
-    ViewData["Title"] = "Editar Cliente";
+    ViewData["Title"] = "Editar";
 }
 
-<h1>Atualizar Cliente - @Model.Nome</h1>
+<h1>Editar</h1>
 
 <hr />
 <!-- Exibe a mensagem de erro, se houver -->
@@ -15,18 +16,16 @@
         </div>
     </div>
 }
-
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Editar">
-            @{ await Html.RenderPartialAsync("_CadastroCliente", model: Model); }
+            @{
+                await Html.RenderPartialAsync("_CadastroEndereco");
+            }
         </form>
     </div>
 </div>
 
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

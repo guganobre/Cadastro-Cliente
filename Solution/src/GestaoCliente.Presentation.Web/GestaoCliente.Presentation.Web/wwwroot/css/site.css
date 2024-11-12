@@ -20,3 +20,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.action-column {
+    width: 40px;
+    text-align: center;
+}
+
+.btn-sm {
+    padding: 0.25rem; /* Ajusta o padding para deixar mais compacto */
+}
