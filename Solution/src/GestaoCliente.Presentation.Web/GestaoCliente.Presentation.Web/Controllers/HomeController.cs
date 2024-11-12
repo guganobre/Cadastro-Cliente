@@ -8,15 +8,19 @@ namespace GestaoCliente.Presentation.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IClienteService _clienteService;
 
         public HomeController(ILogger<HomeController> logger, IClienteService clienteService)
         {
             _logger = logger;
+            this._clienteService = clienteService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var clientes = _clienteService.GetAll();
+
+            return View(clientes);
         }
 
         public IActionResult Privacy()

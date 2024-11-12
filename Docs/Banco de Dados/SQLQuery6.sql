@@ -1,22 +1,34 @@
-CREATE or ALTER PROCEDURE pr_Cliente_Insert
-	@nome varchar(255) = NULL,
-	@email varchar(255)
-as
+
+ALTER   PROCEDURE [dbo].[pr_Endereco_Update]
+    @logradouro varchar(500),
+    @numero varchar(10) = NULL,
+    @complemento varchar(255) = NULL,
+    @apelido varchar(50),
+    @logradouroId int,
+    @clienteId uniqueidentifier
+AS
 
 DECLARE @id uniqueidentifier SET @id = newid();
 
-INSERT INTO dbo.Clientes
+INSERT INTO dbo.Enderecos
 (
-	Id,
-    Nome,
-    Email
+    Id,
+    Logradouro,
+    Numero,
+    Complemento,
+    Apelido,
+    LogradouroId,
+    ClienteId
 )
 VALUES
 (
-    @id, -- Id - uniqueidentifier
-    @nome, -- Nome - varchar
-    @email -- Email - varchar
+	@id,
+    @logradouro, -- Logradouro - varchar
+    @numero, -- Numero - varchar
+    @complemento, -- Complemento - varchar
+    @apelido, -- Apelido - varchar
+    @logradouroId, -- LogradouroId - int
+    @clienteId -- ClienteId - uniqueidentifier
 )
 
-SELECT @id as Id
-
+SELECT @id AS Id

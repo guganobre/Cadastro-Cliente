@@ -1,4 +1,5 @@
 ﻿using GestaoCliente.Core.Application.DTOs.Requests;
+using GestaoCliente.Core.Domain.DTOs.Requests;
 using GestaoCliente.Core.Domain.Entities;
 using GestaoCliente.Core.Domain.Exceptions;
 using GestaoCliente.Core.Domain.Interface;
@@ -35,7 +36,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         [Fact]
         public void Insert()
         {
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = $"{generateRandomString(20)}@gmail.com",
                 Nome = "teste"
@@ -46,53 +47,32 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             Assert.NotNull(result);
         }
 
-        [Fact]
-        public void Insert_ValidEmailSize()
-        {
-            var request = new ClienteRequest
-            {
-                Email = generateRandomString(256) + "@gmail.com",
-                Nome = "teste"
-            };
-
-            Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteTamanhoEmail);
-        }
-
         [Theory]
         [InlineData("lgnobre")]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("max")]
         public void Insert_ValidEmail(string email)
         {
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
-                Email = email,
+                Email = email == "max" ? $"{generateRandomString(256)}@gmail.com" : email,
                 Nome = "teste"
             };
+
             Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteEmail);
-        }
-
-        [Fact]
-        public void Insert_ValidNomeSize()
-        {
-            var request = new ClienteRequest
-            {
-                Email = "email@gmail.com",
-                Nome = generateRandomString(257)
-            };
-
-            Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteTamanhoNome);
         }
 
         [Theory]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("max")]
         public void Insert_ValidNome(string nome)
         {
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = "email@gmail.com",
-                Nome = nome
+                Nome = nome == "max" ? generateRandomString(256) : nome
             };
 
             Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteNome);
@@ -102,7 +82,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         public void Update()
         {
             var model = service.GetAll().First();
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = "email@confirmacao.com.br",
                 Nome = "Teste Atualização"
@@ -125,7 +105,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         [InlineData("b7a02602-1141-4756-95b3-12da8cee6c45")]
         public void Update_IdIncorreto(Guid id)
         {
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = "lgnobre@gmail.com",
                 Nome = "teste",
@@ -134,61 +114,37 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             Assert.Throws<ServiceException>(() => service.Update(id, request)).ValidarMensagem(TypeServiceException.ClienteId);
         }
 
-        [Fact]
-        public void Update_ValidEmailSize()
-        {
-            var entity = service.GetAll().First();
-            var request = new ClienteRequest
-            {
-                Nome = entity.Nome,
-                Email = generateRandomString(256) + "@gmail.com"
-            };
-
-            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteTamanhoEmail);
-        }
-
         [Theory]
         [InlineData("lgnobre")]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("max")]
         public void Update_ValidEmail(string email)
         {
             var entity = service.GetAll().First();
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
-                Email = email,
+                Email = email == "max" ? generateRandomString(256) + "@gmail.com" : email,
                 Nome = entity.Nome
             };
 
             Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteEmail);
         }
 
-        [Fact]
-        public void Update_ValidNomeSize()
-        {
-            var entity = service.GetAll().First();
-            var request = new ClienteRequest
-            {
-                Email = entity.Email,
-                Nome = generateRandomString(257),
-            };
-
-            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteTamanhoNome);
-        }
-
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void Update_NomeVazioOuNulo(string nome)
+        [InlineData("max")]
+        public void Update_ValidNome(string nome)
         {
             var entity = service.GetAll().First();
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = entity.Email,
-                Nome = nome
+                Nome = nome == "max" ? generateRandomString(256) : nome
             };
 
-            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request));
+            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteNome);
         }
 
         [Fact]

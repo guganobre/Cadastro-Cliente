@@ -37,6 +37,8 @@ namespace GestaoCliente.Infra.Data.Repositories
             }
         }
 
+        public bool Exists(Guid id) => Exists(o => o.Id == id);
+
         public bool Update(Cliente cliente)
         {
             try

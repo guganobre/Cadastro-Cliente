@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace GestaoCliente.Core.Domain.Interface.Repositories
 {
-    public interface IClienteRepository : IBaseListRepository<Cliente>
+    public interface IEnderecoRepository : IBaseListRepository<Endereco>
     {
         bool Exists(Guid id);
 
-        Guid? Add(Cliente cliente);
+        Guid? Add(Endereco entity);
 
         bool Delete(Guid id);
 
-        bool Update(Cliente cliente);
+        bool Update(Endereco entity);
     }
 }

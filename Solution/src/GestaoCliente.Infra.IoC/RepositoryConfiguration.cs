@@ -26,6 +26,7 @@ namespace GestaoCliente.Infra.IoC
             services.AddScoped(typeof(IBaseListRepository<>), typeof(BaseListRepository<>));
 
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 
             return services;
         }

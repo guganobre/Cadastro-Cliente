@@ -18,6 +18,8 @@ namespace GestaoCliente.Infra.Data.Repositories
 
         public virtual TEntity? GetById(object? id) => _dbSet.Find(id);
 
+        public virtual bool Exists(Expression<Func<TEntity, bool>> filter) => Get(filter).Any();
+
         public virtual ValueTask<TEntity?> GetByIdAsync(object? id) => _dbSet.FindAsync(id);
 
         public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter) => Get().Where(filter);

@@ -2,7 +2,9 @@
 using GestaoCliente.Core.Application.Helpers;
 using GestaoCliente.Core.Application.Services;
 using GestaoCliente.Core.Domain.Entities;
+using GestaoCliente.Core.Domain.Interface.Repositories;
 using GestaoCliente.Core.Domain.Interface.Services;
+using GestaoCliente.Infra.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,14 +16,15 @@ namespace GestaoCliente.Infra.IoC
 {
     public static class ServiceConfiguration
     {
-        public static IServiceCollection AddService(this IServiceCollection service)
+        public static IServiceCollection AddService(this IServiceCollection services)
         {
-            service.AddScoped<ITiposLogradouroService, TiposLogradouroService>();
-            service.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<ITiposLogradouroService, TiposLogradouroService>();
+            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IEnderecoService, EnderecoService>();
 
-            service.AddSingleton(new MapperConfiguration(config => config.ConfigurationMap()).CreateMapper());
+            services.AddSingleton(new MapperConfiguration(config => config.ConfigurationMap()).CreateMapper());
 
-            return service;
+            return services;
         }
     }
 }

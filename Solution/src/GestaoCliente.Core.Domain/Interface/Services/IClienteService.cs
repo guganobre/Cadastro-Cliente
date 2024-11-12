@@ -1,18 +1,13 @@
-﻿using GestaoCliente.Core.Domain.Entities;
-using GestaoCliente.Core.Domain.Interface.DTOs.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GestaoCliente.Core.Domain.DTOs.Requests;
+using GestaoCliente.Core.Domain.Entities;
 
 namespace GestaoCliente.Core.Domain.Interface.Services
 {
     public interface IClienteService
     {
-        Guid? Insert(IClienteRequest model);
+        Guid? Insert(ClienteDTORequest model);
 
-        bool Update(Guid id, IClienteRequest model);
+        bool Update(Guid id, ClienteDTORequest model);
 
         bool Delete(Guid id);
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestaoCliente.Core.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,17 @@ namespace GestaoCliente.Core.Domain.Exceptions
         }
 
         private static Dictionary<TypeServiceException, string> _erros = new Dictionary<TypeServiceException, string> {
-            { TypeServiceException.ClienteNome, "O campo nome não foi preenchido corretamente." },
-            { TypeServiceException.ClienteTamanhoNome, "O campo nome ultrapassou o limite de caracteres." },
             { TypeServiceException.ClienteEmail, "O campo e-mail não foi preenchido corretamente." },
-            { TypeServiceException.ClienteTamanhoEmail, "O campo e-mail ultrapassou o limite de caracteres." },
             { TypeServiceException.ClienteId, "O campo Id não foi informado corretamente." },
+            { TypeServiceException.ClienteNome, "O campo nome não foi preenchido corretamente." },
+
+            { TypeServiceException.EnderecoApelido, "O campo logradouro não foi informado corretamente." },
+            { TypeServiceException.EnderecoComplemento, "O campo complemento não foi informado corretamente." },
+            { TypeServiceException.EnderecoLogradouro, "O campo logradouro não foi informado corretamente." },
+            { TypeServiceException.EnderecoNumero, "O campo numero não foi informado corretamente." },
+            { TypeServiceException.EnderecoTipoLogradouro, "O campo tipo logradouro não foi informado corretamente." },
+
+            { TypeServiceException.EnderecoId, "O campo id do endereço não foi informado corretamente." },
         };
     }
 
@@ -35,8 +42,14 @@ namespace GestaoCliente.Core.Domain.Exceptions
     {
         ClienteId,
         ClienteEmail,
-        ClienteTamanhoEmail,
         ClienteNome,
-        ClienteTamanhoNome
+
+        EnderecoApelido,
+        EnderecoComplemento,
+        EnderecoLogradouro,
+        EnderecoNumero,
+        EnderecoTipoLogradouro,
+
+        EnderecoId,
     }
 }

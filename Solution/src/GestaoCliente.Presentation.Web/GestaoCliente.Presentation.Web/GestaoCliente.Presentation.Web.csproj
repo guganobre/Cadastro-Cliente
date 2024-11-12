@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\GestaoCliente.Core.Application\GestaoCliente.Core.Application.csproj" />
+    <ProjectReference Include="..\..\GestaoCliente.Core.Domain\GestaoCliente.Core.Domain.csproj" />
     <ProjectReference Include="..\..\GestaoCliente.Infra.IoC\GestaoCliente.Infra.IoC.csproj" />
   </ItemGroup>
 

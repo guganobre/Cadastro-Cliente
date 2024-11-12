@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
+using GestaoCliente.Core.Application.DTOs.Requests;
+using GestaoCliente.Core.Domain.DTOs.Requests;
 using GestaoCliente.Core.Domain.Entities;
-using GestaoCliente.Core.Domain.Interface.DTOs.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoCliente.Core.Application.Helpers
 {
@@ -13,12 +9,18 @@ namespace GestaoCliente.Core.Application.Helpers
     {
         public static void ConfigurationMap(this IMapperConfigurationExpression config)
         {
-            config.AutoMapperClienteRequest();
+            config.AutoMapperClienteDTO();
+            config.AutoMapperEnderecoDTO();
         }
 
-        public static void AutoMapperClienteRequest(this IMapperConfigurationExpression config)
+        public static void AutoMapperClienteDTO(this IMapperConfigurationExpression config)
         {
-            config.CreateMap<IClienteRequest, Cliente>();
+            config.CreateMap<ClienteDTORequest, Cliente>();
+        }
+
+        public static void AutoMapperEnderecoDTO(this IMapperConfigurationExpression config)
+        {
+            config.CreateMap<EnderecoDTORequest, Endereco>();
         }
     }
 }

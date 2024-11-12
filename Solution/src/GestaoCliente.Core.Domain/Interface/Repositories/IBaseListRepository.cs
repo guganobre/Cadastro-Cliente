@@ -6,6 +6,8 @@ namespace GestaoCliente.Core.Domain.Interface.Repositories
     {
         TEntity? GetById(object? id);
 
+        bool Exists(Expression<Func<TEntity, bool>> filter);
+
         ValueTask<TEntity?> GetByIdAsync(object? id);
 
         IQueryable<TEntity> Get(bool isNoTracking = true, params Expression<Func<TEntity, object>>[] includeProperties);

@@ -1,17 +1,10 @@
 ﻿using AutoMapper;
-using FluentValidation;
-using GestaoCliente.Core.Application.DTOs.Requests;
-using GestaoCliente.Core.Application.DTOs.Validators;
+using GestaoCliente.Core.Application.Validators;
+using GestaoCliente.Core.Domain.DTOs.Requests;
 using GestaoCliente.Core.Domain.Entities;
 using GestaoCliente.Core.Domain.Exceptions;
-using GestaoCliente.Core.Domain.Interface.DTOs.Requests;
 using GestaoCliente.Core.Domain.Interface.Repositories;
 using GestaoCliente.Core.Domain.Interface.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoCliente.Core.Application.Services
 {
@@ -28,7 +21,7 @@ namespace GestaoCliente.Core.Application.Services
 
         public bool Delete(Guid id)
         {
-            var exists = repository.Get(w => w.Id == id).Any();
+            var exists = repository.Exists(id);
             if (!exists)
             {
                 throw new ServiceException(TypeServiceException.ClienteId);
@@ -41,9 +34,9 @@ namespace GestaoCliente.Core.Application.Services
 
         public Cliente? GetById(Guid? id) => repository.Get(w => w.Id == id).FirstOrDefault();
 
-        public Guid? Insert(IClienteRequest model)
+        public Guid? Insert(ClienteDTORequest model)
         {
-            var validator = new ClientRequestValidator();
+            var validator = new ClientDTORequestValidator();
 
             var result = validator.Validate(model);
             if (result.IsValid)
@@ -56,15 +49,15 @@ namespace GestaoCliente.Core.Application.Services
             }
         }
 
-        public bool Update(Guid id, IClienteRequest model)
+        public bool Update(Guid id, ClienteDTORequest model)
         {
-            var exists = repository.Get(w => w.Id == id).Any();
+            var exists = repository.Exists(id);
             if (!exists)
             {
                 throw new ServiceException(TypeServiceException.ClienteId);
             }
 
-            var validator = new ClientRequestValidator();
+            var validator = new ClientDTORequestValidator();
             var result = validator.Validate(model);
             if (result.IsValid)
             {

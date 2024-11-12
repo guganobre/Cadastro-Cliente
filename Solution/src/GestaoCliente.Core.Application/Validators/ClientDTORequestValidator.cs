@@ -1,17 +1,12 @@
 ﻿using FluentValidation;
+using GestaoCliente.Core.Domain.DTOs.Requests;
 using GestaoCliente.Core.Domain.Exceptions;
-using GestaoCliente.Core.Domain.Interface.DTOs.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GestaoCliente.Core.Application.DTOs.Validators
+namespace GestaoCliente.Core.Application.Validators
 {
-    internal class ClientRequestValidator : AbstractValidator<IClienteRequest>
+    internal class ClientDTORequestValidator : AbstractValidator<ClienteDTORequest>
     {
-        public ClientRequestValidator()
+        public ClientDTORequestValidator()
         {
             RuleFor(x => x.Nome)
                 .NotNull()
@@ -19,13 +14,13 @@ namespace GestaoCliente.Core.Application.DTOs.Validators
                 .NotEmpty()
                 .WithMessage(ServiceException.GetMensagemErro(TypeServiceException.ClienteNome))
                 .MaximumLength(255)
-                .WithMessage(ServiceException.GetMensagemErro(TypeServiceException.ClienteTamanhoNome));
+                .WithMessage(ServiceException.GetMensagemErro(TypeServiceException.ClienteNome));
 
             RuleFor(x => x.Email)
                 .NotNull()
                 .WithMessage(ServiceException.GetMensagemErro(TypeServiceException.ClienteEmail))
                 .MaximumLength(255)
-                .WithMessage(ServiceException.GetMensagemErro(TypeServiceException.ClienteTamanhoEmail))
+                .WithMessage(ServiceException.GetMensagemErro(TypeServiceException.ClienteEmail))
                 .EmailAddress()
                 .WithMessage(ServiceException.GetMensagemErro(TypeServiceException.ClienteEmail));
         }

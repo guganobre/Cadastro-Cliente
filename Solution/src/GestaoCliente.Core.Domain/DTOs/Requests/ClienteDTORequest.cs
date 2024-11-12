@@ -1,17 +1,14 @@
-﻿using GestaoCliente.Core.Domain.Interface.DTOs.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GestaoCliente.Core.Application.DTOs.Requests
+﻿namespace GestaoCliente.Core.Domain.DTOs.Requests
 {
     /// <summary>
-    /// Interface para requisição de um novo cliente
+    /// DTO para persitencia de um cliente
     /// </summary>
-    public class ClienteRequest : IClienteRequest
+    public struct ClienteDTORequest
     {
+        public ClienteDTORequest()
+        {
+        }
+
         /// <summary>
         /// Nome do cliente (Tamanho máximo: 255)
         /// </summary>
