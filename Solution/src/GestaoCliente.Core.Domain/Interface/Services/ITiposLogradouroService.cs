@@ -4,6 +4,6 @@ namespace GestaoCliente.Core.Domain.Interface.Services
 {
     public interface ITiposLogradouroService
     {
-        List<TiposLogradouro> GetAll();
+        List<TiposLogradouro> GetIsActive();
     }
 }

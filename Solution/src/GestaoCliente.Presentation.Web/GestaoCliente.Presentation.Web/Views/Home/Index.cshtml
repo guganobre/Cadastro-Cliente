@@ -1,8 +1,70 @@
-﻿@{
+﻿@model IEnumerable<GestaoCliente.Core.Domain.Entities.Cliente>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Lista de Clientes</h1>
+
+    <!-- Exibe a mensagem de sucesso, se houver -->
+    @if (ViewBag.Success != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" id="displayMensagem">@ViewBag.Success</div>
+            </div>
+        </div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger" id="displayMensagem">@ViewBag.Error</div>
+            </div>
+        </div>
+    }
+
+    <div class="form-group d-flex justify-content-end">
+        <a asp-action="Cadastrar" class="btn btn-primary">
+            <i class="fas fa-plus"></i> <!-- Ícone de "Adicionar" -->
+            Adicionar Cliente
+        </a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Email</td>
+                    <td class="action-column">
+                        <a asp-action="Pesquisar" asp-controller="Endereco" asp-route-id="@cliente.Id" class="btn btn-info btn-sm p-1" title="Endereços">
+                            <i class="fas fa-map-marker-alt"></i> <!-- Ícone de marcador de localização -->
+                        </a>
+                    </td>
+                    <td class="action-column">
+                        <a asp-action="Editar" asp-route-id="@cliente.Id" class="btn btn-info btn-sm p-1" title="Editar">
+                            <i class="fas fa-edit"></i> <!-- Ícone de lápis para edição -->
+                        </a>
+                    </td>
+                    <td class="action-column">
+                        <a href="#" class="btn btn-danger btn-sm p-1" onclick="confirmarExclusao('Deseja realmente excluir este cliente?', '@Url.Action("Excluir", "Home", new { id = cliente.Id })')" title="Excluir">
+                            <i class="fas fa-trash-alt"></i> <!-- Ícone de lixeira -->
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

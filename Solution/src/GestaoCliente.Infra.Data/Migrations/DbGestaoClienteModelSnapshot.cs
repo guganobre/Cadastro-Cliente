@@ -22,6 +22,22 @@ namespace GestaoCliente.Infra.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GestaoCliente.Core.Domain.DTOs.Responses.PrClienteInsertResponse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.ToTable("PrClienteInsertResponse");
+                });
+
+            modelBuilder.Entity("GestaoCliente.Core.Domain.DTOs.Responses.PrEnderecoInsertResponse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.ToTable("PrEnderecoInsertResponse");
+                });
+
             modelBuilder.Entity("GestaoCliente.Core.Domain.Entities.Cliente", b =>
                 {
                     b.Property<Guid>("Id")
@@ -115,9 +131,11 @@ namespace GestaoCliente.Infra.Data.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ClienteId")
+                        .HasDatabaseName("IX_Enderecos_ClienteId");
 
-                    b.HasIndex("LogradouroId");
+                    b.HasIndex("LogradouroId")
+                        .HasDatabaseName("IX_Enderecos_LogradouroId");
 
                     b.ToTable("Enderecos", "dbo", t =>
                         {

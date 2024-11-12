@@ -1,4 +1,5 @@
 using GestaoCliente.Infra.IoC;
+using GestaoCliente.Presentation.Web.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,36 +9,15 @@ builder.Services.AddControllersWithViews();
 var configuration = builder.Configuration;
 var services = builder.Services;
 
-
 services.AddRepository(configuration);
+services.AddService();
+services.AddAutoMapper();
 
-
-
-
-
-
-
-
-// config app
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+services.AddSession(options =>
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+    options.Cookie.HttpOnly = true;  // Garante que o cookie não seja acessado via JS
+    options.Cookie.IsEssential = true; // Torna o cookie essencial para a aplicação
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Tempo de expiração da sessão
+});
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
+builder.AddConfiguration();

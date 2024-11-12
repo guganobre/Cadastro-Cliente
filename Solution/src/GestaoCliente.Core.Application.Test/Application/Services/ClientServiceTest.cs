@@ -1,7 +1,11 @@
 ﻿using GestaoCliente.Core.Application.DTOs.Requests;
+using GestaoCliente.Core.Domain.DTOs.Requests;
 using GestaoCliente.Core.Domain.Entities;
 using GestaoCliente.Core.Domain.Exceptions;
+using GestaoCliente.Core.Domain.Interface;
 using GestaoCliente.Core.Domain.Interface.Services;
+using GestaoCliente.Infra.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +14,11 @@ using System.Threading.Tasks;
 
 namespace GestaoCliente.Core.Application.Test.Application.Services
 {
-    public class ClientServiceTest
+    public class ClientServiceTest : BaseServiceTest
     {
         private readonly IClienteService service;
 
-        public ClientServiceTest(IClienteService service)
+        public ClientServiceTest(IClienteService service, DbGestaoCliente db) : base(db)
         {
             this.service = service;
         }
@@ -25,14 +29,16 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             var result = service.GetAll();
 
             Assert.NotNull(result);
+
+            Assert.True(result.Any(), "Não foi possível listar os clientes");
         }
 
         [Fact]
         public void Insert()
         {
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
-                Email = "lgnobre@gmail.com",
+                Email = $"{generateRandomString(20)}@gmail.com",
                 Nome = "teste"
             };
 
@@ -42,52 +48,44 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         }
 
         [Fact]
-        public void Insert_ValidEmailSize()
+        public void Insert_EmailExistente()
         {
-            var request = new ClienteRequest
+            var email = service.GetAll().Select(s => s.Email).LastOrDefault();
+            var request = new ClienteDTORequest
             {
-                Email = generateRandomString(256) + "@gmail.com",
+                Email = email,
                 Nome = "teste"
             };
 
-            Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteTamanhoEmail);
+            Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteEmailExistente);
         }
 
         [Theory]
         [InlineData("lgnobre")]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("max")]
         public void Insert_ValidEmail(string email)
         {
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
-                Email = email,
+                Email = email == "max" ? $"{generateRandomString(256)}@gmail.com" : email,
                 Nome = "teste"
             };
+
             Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteEmail);
-        }
-
-        [Fact]
-        public void Insert_ValidNomeSize()
-        {
-            var request = new ClienteRequest
-            {
-                Email = "email@gmail.com",
-                Nome = generateRandomString(257)
-            };
-
-            Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteTamanhoNome);
         }
 
         [Theory]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("max")]
         public void Insert_ValidNome(string nome)
         {
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = "email@gmail.com",
-                Nome = nome
+                Nome = nome == "max" ? generateRandomString(256) : nome
             };
 
             Assert.Throws<ServiceException>(() => service.Insert(request)).ValidarMensagem(TypeServiceException.ClienteNome);
@@ -97,7 +95,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         public void Update()
         {
             var model = service.GetAll().First();
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = "email@confirmacao.com.br",
                 Nome = "Teste Atualização"
@@ -116,11 +114,26 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             }
         }
 
+        [Fact]
+        public void Update_EmailExistente()
+        {
+            var model = service.GetAll().First();
+            var email = service.GetAll().Where(o => o.Id != model.Id).Select(s => s.Email).First();
+
+            var request = new ClienteDTORequest
+            {
+                Email = email,
+                Nome = model.Nome
+            };
+
+            Assert.Throws<ServiceException>(() => service.Update(model.Id, request)).ValidarMensagem(TypeServiceException.ClienteEmailExistente);
+        }
+
         [Theory]
         [InlineData("b7a02602-1141-4756-95b3-12da8cee6c45")]
         public void Update_IdIncorreto(Guid id)
         {
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = "lgnobre@gmail.com",
                 Nome = "teste",
@@ -129,67 +142,43 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             Assert.Throws<ServiceException>(() => service.Update(id, request)).ValidarMensagem(TypeServiceException.ClienteId);
         }
 
-        [Fact]
-        public void Update_ValidEmailSize()
-        {
-            var entity = service.GetAll().First();
-            var request = new ClienteRequest
-            {
-                Nome = entity.Nome,
-                Email = generateRandomString(256) + "@gmail.com"
-            };
-
-            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteTamanhoEmail);
-        }
-
         [Theory]
         [InlineData("lgnobre")]
         [InlineData("")]
         [InlineData(null)]
+        [InlineData("max")]
         public void Update_ValidEmail(string email)
         {
             var entity = service.GetAll().First();
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
-                Email = email,
+                Email = email == "max" ? generateRandomString(256) + "@gmail.com" : email,
                 Nome = entity.Nome
             };
 
             Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteEmail);
         }
 
-        [Fact]
-        public void Update_ValidNomeSize()
-        {
-            var entity = service.GetAll().First();
-            var request = new ClienteRequest
-            {
-                Email = entity.Email,
-                Nome = generateRandomString(257),
-            };
-
-            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteTamanhoEmail);
-        }
-
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void Update_NomeVazioOuNulo(string nome)
+        [InlineData("max")]
+        public void Update_ValidNome(string nome)
         {
             var entity = service.GetAll().First();
-            var request = new ClienteRequest
+            var request = new ClienteDTORequest
             {
                 Email = entity.Email,
-                Nome = nome
+                Nome = nome == "max" ? generateRandomString(256) : nome
             };
 
-            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request));
+            Assert.Throws<ServiceException>(() => service.Update(entity.Id, request)).ValidarMensagem(TypeServiceException.ClienteNome);
         }
 
         [Fact]
         public void Delete()
         {
-            var id = service.GetAll().Select(s => s.Id).FirstOrDefault();
+            var id = service.GetAll().Select(s => s.Id).LastOrDefault();
 
             var result = service.Delete(id);
 
@@ -199,7 +188,7 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
             {
                 var entity = service.GetById(id);
 
-                Assert.True(entity != null, "O cliente não foi excluído");
+                Assert.True(entity == null, "O cliente não foi excluído");
             }
         }
 
@@ -209,7 +198,6 @@ namespace GestaoCliente.Core.Application.Test.Application.Services
         {
             Assert.Throws<ServiceException>(() => service.Delete(id)).ValidarMensagem(TypeServiceException.ClienteId);
         }
-
 
         private string generateRandomString(int length)
         {

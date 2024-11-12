@@ -19,7 +19,7 @@ namespace GestaoCliente.Core.Application.Test
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .Build();
 
-            services.AddRepository(config);
+            services.AddRepository(config, true);
             services.AddService();
         }
 

@@ -3,6 +3,7 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "Endereco/Pesquisar/bc15ded5-2f07-42f6-bde4-a0a1b03adce4",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

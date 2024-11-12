@@ -1,0 +1,44 @@
+﻿@model EnderecoViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="Apelido" class="control-label"></label>
+    <input asp-for="Apelido" class="form-control" />
+    <span asp-validation-for="Apelido" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="LogradouroId" class="control-label">Tipos de Logradouro</label>
+    <select asp-for="LogradouroId" class="form-control" asp-items="@ViewBag.TiposLogradouros">
+        <option value="">Selecione um Tipo Logradouro</option> <!-- Opção de escolha -->
+    </select>
+    <span asp-validation-for="LogradouroId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Logradouro" class="control-label"></label>
+    <input asp-for="Logradouro" class="form-control" />
+    <span asp-validation-for="Logradouro" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Numero" class="control-label"></label>
+    <input asp-for="Numero" class="form-control" />
+    <span asp-validation-for="Numero" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Complemento" class="control-label"></label>
+    <input asp-for="Complemento" class="form-control" />
+    <span asp-validation-for="Complemento" class="text-danger"></span>
+</div>
+<hr />
+<div class="form-group d-flex justify-content-end">
+
+    <a asp-action="Pesquisar" asp-route-id="@ViewBag.ClienteId" class="btn btn-secondary mr-2">
+        <i class="fas fa-arrow-left"></i> <!-- Ícone de seta para "Voltar" -->
+        Voltar
+    </a>
+
+    <button type="submit" class="btn btn-success">
+        <i class="fas fa-save"></i> <!-- Ícone de disquete para "Salvar" -->
+        Salvar
+    </button>
+
+</div>

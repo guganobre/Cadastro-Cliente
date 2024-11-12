@@ -1,4 +1,7 @@
+
+using GestaoCliente.Core.Domain.DTOs.Responses;
 using GestaoCliente.Core.Domain.Entities;
+using GestaoCliente.Infra.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,4 +26,6 @@ namespace GestaoCliente.Infra.Data.Configurations
 
         private partial void InitializePartial(EntityTypeBuilder<TiposLogradouro> builder);
     }
+
 }
+

@@ -10,10 +10,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <Content Remove="Views\Home\Privacy.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="automapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\GestaoCliente.Core.Application\GestaoCliente.Core.Application.csproj" />
+    <ProjectReference Include="..\..\GestaoCliente.Core.Domain\GestaoCliente.Core.Domain.csproj" />
     <ProjectReference Include="..\..\GestaoCliente.Infra.IoC\GestaoCliente.Infra.IoC.csproj" />
   </ItemGroup>
 
